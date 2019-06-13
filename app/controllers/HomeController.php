@@ -108,6 +108,17 @@ class HomeController extends BaseController {
 
 	}
 
+	public function deletarLancamentosAll()
+	{
+		Lancamento::truncate();
+		return 'ok';
+	}
+
+	public function deletarContasAll()
+	{
+		Conta::truncate();
+		return 'ok';
+	}
 
 
 

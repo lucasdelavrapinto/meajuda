@@ -77,8 +77,12 @@ $month == 12 ? $mes = 'Dezembro' : '';
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opções</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown01">
 						<a class="dropdown-item" href="#" onclick="createConta();">Cadastrar Conta</a>
-						<a class="dropdown-item" href="#" onclick="meAjuda();">Ajuda</a>
+						<a class="dropdown-item" href="#" onclick="limparLancamentos();">Limpar Lançamentos</a>
+						<a class="dropdown-item" href="#" onclick="limparContas();">Limpar Contas</a>
 					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#" onclick="meAjuda();">Ajuda</a>
 				</li>
 			</ul>
 		</div>
@@ -187,7 +191,7 @@ $month == 12 ? $mes = 'Dezembro' : '';
 							<td>{{ ucfirst($lan->conta)}}</td>
 							<td>R$ {{number_format($lan->valor, 2, ',', ' ')}} </td>
 							<td>
-								<a href="#" onclick="confirmacao('<?php echo Crypt::encrypt($lan->id); ?>');">
+								<a href="#" onclick="confirmacao('<?php echo Crypt::encrypt($lan->id); ?>', '<?php echo $lan->descricao; ?>');">
 									<i class="fas fa-trash-alt"></i>
 								</a>
 							</td>

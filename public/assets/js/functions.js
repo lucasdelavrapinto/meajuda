@@ -32,11 +32,17 @@ function saveNovaData(id, data) {
   });
 }
 
-function confirmacao(id) {
-  var resposta = confirm('Deseja remover?');
-  if (resposta == true) {
-    window.location = '/deleta-lancamento/' + id + "')";
-  }
+function confirmacao(id, descricao) {
+  Swal.fire({
+    title: 'Deseja remover?',
+    text: 'Lançamento: ' + descricao,
+    showCancelButton: true,
+    confirmButtonText: 'Sim'
+  }).then(result => {
+    if (result.value) {
+      window.location = '/deleta-lancamento/' + id + "')";
+    }
+  });
 }
 
 function initMaskMoney() {
@@ -66,20 +72,24 @@ function formatValor(valor) {
 $('#btn_salvar').click(function(e) {
   e.preventDefault();
   var serializeDados = $('#form_cadastra_lancamento').serialize();
-  var conf = confirm('Confirma a operação:');
-  if (conf == true) {
-    console.log('enviando..');
-    $.ajax({
-      type: 'POST',
-      url: '/cadastra-lancamento',
-      data: serializeDados,
-      success: function(response) {
-        location.reload();
-      }
-    });
-  } else {
-    console.log('desistiu');
-  }
+
+  Swal.fire({
+    title: 'Deseja Salvar?',
+    showCancelButton: true,
+    confirmButtonText: 'Salvar'
+  }).then(result => {
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        url: '/cadastra-lancamento',
+        data: serializeDados,
+        success: function(response) {
+          location.reload();
+        }
+      });
+      console.log('Salvo');
+    }
+  });
 });
 
 function createConta() {
@@ -93,26 +103,75 @@ function createConta() {
     showCancelButton: true,
     confirmButtonText: 'Salvar'
   }).then(result => {
-    console.log(result.value);
-    $.ajax({
-      type: 'POST',
-      url: '/cadastra-conta',
-      data: { input: result.value },
-      cache: false,
-      success: function(response) {
-        if (response == 'ok') {
-          console.log('conta salva');
-          location.reload();
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        url: '/cadastra-conta',
+        data: { input: result.value },
+        cache: false,
+        success: function(response) {
+          if (response == 'ok') {
+            console.log('conta salva');
+            location.reload();
+          }
+        },
+        failure: function(response) {
+          swal(
+            'Internal Error',
+            'Oops, your note was not saved.', // had a missing comma
+            'error'
+          );
         }
-      },
-      failure: function(response) {
-        swal(
-          'Internal Error',
-          'Oops, your note was not saved.', // had a missing comma
-          'error'
-        );
-      }
-    });
+      });
+    }
+  });
+}
+
+function limparLancamentos() {
+  Swal.fire({
+    title: 'Deseja Excluir Tudo?',
+    text: 'Cuidado, essa ação é irreversível',
+    showCancelButton: true,
+    confirmButtonText: 'Sim, eu quero!'
+  }).then(result => {
+    console.log(result.value);
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        data: '',
+        url: '/deletar-lancamentos/todos',
+        success: function(response) {
+          if (response == 'ok') {
+            Swal.fire('Sucesso!');
+            location.reload();
+          }
+        }
+      });
+    }
+  });
+}
+
+function limparContas() {
+  Swal.fire({
+    title: 'Deseja excluir todas as contas cadastradas?',
+    text: 'Cuidado, essa ação é irreversível',
+    showCancelButton: true,
+    confirmButtonText: 'Sim, eu quero!'
+  }).then(result => {
+    console.log(result.value);
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        data: '',
+        url: '/deletar-contas/todos',
+        success: function(response) {
+          if (response == 'ok') {
+            Swal.fire('Sucesso!');
+            location.reload();
+          }
+        }
+      });
+    }
   });
 }
 

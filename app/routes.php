@@ -13,3 +13,6 @@ Route::any('deleta-lancamento/{id}', array('as' => 'del.lan', 'uses' => 'HomeCon
 
 Route::post('/cadastra-conta', array('as' => 'cad.con','uses' => 'HomeController@cadastrarConta'));
 
+Route::any('/deletar-lancamentos/todos', array('as' => 'del.all','uses' => 'HomeController@deletarLancamentosAll'));
+Route::any('/deletar-contas/todos', array('as' => 'del.all','uses' => 'HomeController@deletarContasAll'));
+
