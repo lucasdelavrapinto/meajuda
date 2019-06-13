@@ -37,3 +37,9 @@ CREATE TABLE IF NOT EXISTS `contas` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 ```
+
+### Atualizações
+
+- 13/06/2018
+  - Adicionado SweetAlert2 em todas as opções do Crud.
+  - Adicionado opção para Excluir todos os dados de Lançamentos e Contas.
