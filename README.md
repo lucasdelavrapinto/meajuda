@@ -1,6 +1,6 @@
 ## Me Ajuda - Sistema Financeiro
 
-Criado com a proposta de ajudar pessoas leigas simples.
+Criado com a proposta de ajudar pessoas leigas.
 
 ### Projeto
 
