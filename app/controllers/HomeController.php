@@ -55,6 +55,10 @@ class HomeController extends BaseController {
 		$vlr = str_replace('R$ ','', $valor_passado);
 		$valor = strReplace($vlr);
 
+		if (Input::get('tipo') == null) {
+			$tipo = "saida";
+		}
+
 		if (Input::get('conta') == null) {
 			$conta = "Geral";
 		}

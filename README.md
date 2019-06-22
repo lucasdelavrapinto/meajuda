@@ -40,6 +40,16 @@ CREATE TABLE IF NOT EXISTS `contas` (
 
 ### Atualizações
 
-- 13/06/2018
+- 13/06/2019
+
   - Adicionado SweetAlert2 em todas as opções do Crud.
   - Adicionado opção para Excluir todos os dados de Lançamentos e Contas.
+
+- 22/06/2019
+  - Adicionado efeito **.show('slow')** para preenchimento dos campos
+  - Alterado tabela `lancamentos`
+  ```sh
+  CREATE TABLE IF NOT EXISTS `lancamentos` (
+    `tipo` varchar(255) DEFAULT NULL,
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  ```

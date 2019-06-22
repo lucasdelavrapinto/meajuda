@@ -118,9 +118,9 @@ $month == 12 ? $mes = 'Dezembro' : '';
               Valid last name is required.
             </div>
           </div>
-					<div class="col-md-2">
+					<div class="col-md-2" style="display:none" id="bloco3">
             <label for="lastName">Entrada/Saída</label>
-						<select class="form-control" name="tipo" id="">
+						<select class="form-control" name="tipo" id="" disabled>
 							<!-- <option value="entrada">Entrada</option> -->
 							<option value="saida" selected>Saída</option>
 						</select>
@@ -129,10 +129,10 @@ $month == 12 ? $mes = 'Dezembro' : '';
               Valid last name is required.
             </div>
           </div>
-					<div class="col-md-2">
+					<div class="col-md-2" style="display:none" id="bloco4">
             <label for="lastName">Conta</label>
 
-						<select class="form-control" name="conta" id="">
+						<select class="form-control" name="conta" id="single">
 							<?php $get_contas = Conta::get(); ?>
 								<option value="" select>Selecione...</option>
 									@foreach($get_contas as $contas)
@@ -145,14 +145,14 @@ $month == 12 ? $mes = 'Dezembro' : '';
               Valid last name is required.
             </div>
           </div>
-					<div class="col-md-2">
+					<div class="col-md-2" style="display:none" id="bloco5">
             <label for="">Valor</label>
             <input type="text" class="form-control money" id="valor" name="valor" placeholder="" value="" required>
             <div class="invalid-feedback">
               Valid last name is required.
             </div>
           </div>
-					<div class="col-md-1">
+					<div class="col-md-1" style="display:none" id="bloco6">
 					<label for="">salvar</label>
             <button id="btn_salvar" class="btn btn-info form-control">+</button>
           </div>
@@ -326,6 +326,54 @@ $month == 12 ? $mes = 'Dezembro' : '';
 
 		limparCampos();
 
+		$("#single").val("Selecione...");
+		$("#single").val("").change();
+
+		$('#lastName').keyup(function () {
+			var campos = $(this).val();
+			verificaCampoPreenchidos(campos);
+		});
+
+		function displayVals(data) {
+			if (data) {
+				$("#bloco5").show('slow');
+			}else{
+				$("#bloco5").hide('slow');
+				$("#bloco6").hide('slow');
+			}
+		}
+
+		$("#single").change(function(){
+			data = $(this).val();
+			displayVals(data);
+		})
+
+		function verificaCampoPreenchidos(data) {
+			if (data.length > 0) {
+				$("#bloco3").show('slow');
+				$("#bloco4").show('slow');
+			}else{
+				$("#bloco3").hide('slow');
+				$("#bloco4").hide('slow');
+			}
+		}
+
+		$("input#valor").keyup(function(){
+			var data = $(this).val();
+			var res = data.replace("R$ ", "");
+			if(res.length >= 7){
+				var b = res.replace(".","");
+				var a = b.replace(",",".");
+    	}else{
+				a = res.replace(",",".");
+			}
+			//return a
+			if (a > 0) {
+				$("#bloco6").show('slow');
+			} else {
+				$("#bloco6").hide('slow');
+			}
+		});
 
 	});
 	</script>
